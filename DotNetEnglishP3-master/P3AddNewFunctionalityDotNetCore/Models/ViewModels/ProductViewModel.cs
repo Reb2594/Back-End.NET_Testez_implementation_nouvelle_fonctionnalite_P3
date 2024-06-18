@@ -10,11 +10,9 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
 
         [Required(ErrorMessage = "ErrorMissingName")]
         public string Name { get; set; }
-
-        [BindNever]
+                
         public string Description { get; set; }
-
-        [BindNever]
+                
         public string Details { get; set; }
 
         [Required(ErrorMessage = "ErrorStockValue")]
