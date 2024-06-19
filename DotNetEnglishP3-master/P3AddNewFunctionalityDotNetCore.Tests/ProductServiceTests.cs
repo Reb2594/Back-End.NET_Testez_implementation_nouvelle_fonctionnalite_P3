@@ -23,12 +23,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         /// A test method must check if a definite method does its job:
         /// returns an expected value from a particular set of parameters
         /// </summary>
-        /// 
-        private readonly ITestOutputHelper output;
-        public ProductServiceTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
+        ///         
         [Fact]
         public void ExampleMethod()
         {
@@ -48,9 +43,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         {
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
-            {
-                Description = "Description",
-                Details = "Details",
+            {               
                 Stock = "10",
                 Price = "100.00"
             };
@@ -72,8 +65,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "100.00"
             };
@@ -86,7 +77,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorMissingStock");
         }
 
         [Fact]
@@ -95,8 +86,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "100.00",
                 Stock = "a",
@@ -110,31 +99,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockValue");
-        }
-
-        [Fact]
-        public void CheckRangeInStock()
-        {
-            //Arrange
-            ProductViewModel productViewModel = new ProductViewModel
-            {
-                Description = "Description",
-                Details = "Details",
-                Name = "New Product",
-                Price = "100.00",
-                Stock = "-3",
-            };
-
-            var context = new ValidationContext(productViewModel, null, null);
-            var results = new List<ValidationResult>();
-
-            // Act
-            var isValid = Validator.TryValidateObject(productViewModel, context, results, true);
-
-            // Assert
-            Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockNotAnInteger");
         }
 
         [Fact]
@@ -143,11 +108,9 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "100.00",
-                Stock = "2,3",
+                Stock = "2.3",
             };
 
             var context = new ValidationContext(productViewModel, null, null);
@@ -158,7 +121,29 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockNotAnInteger");
+        }
+
+        [Fact]
+        public void CheckRangeInStock()
+        {
+            //Arrange
+            ProductViewModel productViewModel = new ProductViewModel
+            {
+                Name = "New Product",
+                Price = "100.00",
+                Stock = "-1",
+            };
+
+            var context = new ValidationContext(productViewModel, null, null);
+            var results = new List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(productViewModel, context, results, true);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockNotGreaterThanZero");
         }
 
         [Fact]
@@ -167,8 +152,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "100.00",
                 Stock = "0",
@@ -182,7 +165,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorStockNotGreaterThanZero");
         }
 
         [Fact]
@@ -191,8 +174,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",                
                 Stock = "4",
             };
@@ -205,7 +186,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorMissingPrice");
         }
 
         [Fact]
@@ -214,8 +195,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "a",
                 Stock = "3",
@@ -229,7 +208,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceNotANumber");
         }
 
         [Fact]
@@ -238,8 +217,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "4.239",
                 Stock = "3",
@@ -253,7 +230,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceNotANumber");
         }
 
         [Fact]
@@ -262,8 +239,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
                 Price = "4.",
                 Stock = "3",
@@ -277,7 +252,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceNotANumber");
         }
 
         [Fact]
@@ -286,10 +261,8 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
-                Price = "-4",
+                Price = "-1",
                 Stock = "3",
             };
 
@@ -301,19 +274,17 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceNotGreaterThanZero");
         }
 
         [Fact]
-        public void CheckNumberFormatInPrice()
+        public void CheckNotZeroInPrice()
         {
             //Arrange
             ProductViewModel productViewModel = new ProductViewModel
             {
-                Description = "Description",
-                Details = "Details",
                 Name = "New Product",
-                Price = "4.",
+                Price = "0",
                 Stock = "3",
             };
 
@@ -325,10 +296,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isValid);
-            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceValue");
+            Assert.Contains(results, v => v.ErrorMessage == "ErrorPriceNotGreaterThanZero");
         }
-    }
-
-
-    
+    }   
 }
