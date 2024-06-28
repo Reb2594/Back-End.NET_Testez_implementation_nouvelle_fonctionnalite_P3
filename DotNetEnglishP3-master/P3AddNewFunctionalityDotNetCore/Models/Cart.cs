@@ -1,5 +1,6 @@
 ﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace P3AddNewFunctionalityDotNetCore.Models
@@ -31,13 +32,43 @@ namespace P3AddNewFunctionalityDotNetCore.Models
 
         public double GetTotalValue()
         {
-            return _cartLines.Any() ? _cartLines.Sum(l => l.Product.Price) : 0;
+            double total = 0.0;
+            if (Lines != null)
+            {
+                foreach (CartLine cartLine in Lines)
+                {
+
+                    total += (cartLine.Product.Price * cartLine.Quantity);                                    
+
+                }
+
+                return total;
+            }
+            else
+            {
+                return total;
+            }
         }
+
+        public string TotalPriceMoney() { return CultureInfo.CurrentCulture.Name == "fr" ? GetTotalValue().ToString("C").Replace("¤", "€") : GetTotalValue().ToString("C").Replace("¤", "$"); }
 
         public double GetAverageValue()
         {
-            return _cartLines.Any() ? _cartLines.Average(l => l.Product.Price) : 0;
+            if (Lines != null && _cartLines.Count > 0)
+            {
+                int totalQuantity = 0;
+                foreach (CartLine cartLine in Lines)
+                {
+                    totalQuantity += cartLine.Quantity;
+                }
+                return GetTotalValue() / totalQuantity;
+            }
+            else
+            {
+                return 0.0;
+            }
         }
+        public string AveragePriceMoney() { return CultureInfo.CurrentCulture.Name == "fr" ? GetAverageValue().ToString("C").Replace("¤", "€") : GetAverageValue().ToString("C").Replace("¤", "$"); }
 
         public void Clear() => _cartLines.Clear();
 

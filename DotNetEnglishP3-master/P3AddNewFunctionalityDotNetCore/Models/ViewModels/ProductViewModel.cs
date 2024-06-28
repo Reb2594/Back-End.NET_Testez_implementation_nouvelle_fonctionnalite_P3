@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
 {
@@ -24,5 +26,21 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "ErrorPriceNotANumber")]
         [Range(0.01, double.MaxValue, ErrorMessage = "ErrorPriceNotGreaterThanZero")]
         public string Price { get; set; }
+
+        public double IntPrice()
+        {
+            if (double.TryParse(Price, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
+            {
+                return result;
+            }
+            throw new FormatException("Price is not in a correct format.");
+        }
+
+        public string PriceViewMoney()
+        {
+            return CultureInfo.CurrentCulture.Name == "fr"
+                ? IntPrice().ToString("C", CultureInfo.CreateSpecificCulture("fr-FR")).Replace("¤", "€")
+                : IntPrice().ToString("C", CultureInfo.CreateSpecificCulture("en-US")).Replace("¤", "$");
+        }
     }
 }
