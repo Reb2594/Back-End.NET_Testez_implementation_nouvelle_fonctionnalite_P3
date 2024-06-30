@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.Entities
 {
@@ -14,6 +16,21 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Entities
         public string Details { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+
+        public string PriceMonnaie(int quantity = 1) { return CultureInfo.CurrentCulture.Name == "fr" ? (Price * quantity).ToString("C").Replace("¤", "€") : (Price * quantity).ToString("C").Replace("¤", "$"); }
+        /*{
+            string priceMoney =  Price.ToString("C");
+            if(CultureInfo.CurrentCulture.Name == "fr")
+            {
+                priceMoney = priceMoney.Replace("¤", "€");
+            }
+            else
+            {
+                priceMoney = priceMoney.Replace("¤", "$");
+            }
+
+            return priceMoney;
+        }*/
         public int Quantity { get; set; }
 
         public virtual ICollection<OrderLine> OrderLine { get; set; }

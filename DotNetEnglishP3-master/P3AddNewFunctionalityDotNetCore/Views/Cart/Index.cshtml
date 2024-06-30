@@ -1,4 +1,4 @@
-﻿@model P3AddNewFunctionalityDotNetCore.Models.Cart
+@model P3AddNewFunctionalityDotNetCore.Models.Cart
 
 <h2>@Localizer["YourCart"]</h2>
 <table class="table table-bordered table-striped">
@@ -16,9 +16,9 @@
             <tr>
                 <td class="text-center">@line.Quantity</td>
                 <td class="text-start">@line.Product.Name</td>
-                <td class="text-end">@line.Product.Price.ToString("c")</td>
+                <td class="text-end">@line.Product.PriceMonnaie()</td>
                 <td class="text-end">
-                    @((line.Quantity * line.Product.Price).ToString("c"))
+                    @(line.Product.PriceMonnaie(line.Quantity))
                 </td>
                 <td>
                     <form asp-action="RemoveFromCart" method="post">
@@ -36,13 +36,13 @@
         <tr>
             <td colspan="3" class="text-end">@Localizer["Total"]:</td>
             <td class="text-end">
-                @Model.GetTotalValue().ToString("c")
+                @Model.TotalPriceMoney()
             </td>
         </tr>
         <tr>
             <td colspan="3" class="text-end">@Localizer["Average"]:</td>
             <td class="text-end">
-                @Model.GetAverageValue().ToString("c")
+                @Model.AveragePriceMoney()
             </td>
         </tr>
     </tfoot>

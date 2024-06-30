@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using P3AddNewFunctionalityDotNetCore;
 using System.Linq;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,4 +82,9 @@ app.MapControllerRoute(
 
 await IdentitySeedData.EnsurePopulated(app);
 
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("fr-FR");
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("fr-FR");
+CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol = "€";
+
 app.Run();
+

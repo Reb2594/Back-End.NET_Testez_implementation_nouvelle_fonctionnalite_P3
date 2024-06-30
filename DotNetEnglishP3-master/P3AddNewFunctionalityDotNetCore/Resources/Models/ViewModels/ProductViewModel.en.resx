@@ -126,6 +126,18 @@
   <data name="ErrorMissingStock" xml:space="preserve">
     <value>Please enter a stock value</value>
   </data>
+  <data name="ErrorPriceNotANumber" xml:space="preserve">
+    <value>The price value must be a number with a maximum of 2 digits</value>
+  </data>
+  <data name="ErrorPriceNotGreaterThanZero" xml:space="preserve">
+    <value>The price value must be a number greater than zero</value>
+  </data>
+  <data name="ErrorStockNotGreaterThanZero" xml:space="preserve">
+    <value>The stock value must be a number greater than zero</value>
+  </data>
+  <data name="ErrorStockNotAnInteger" xml:space="preserve">
+    <value>The stock value must be an integer</value>
+  </data>
   <data name="ErrorPriceValue" xml:space="preserve">
     <value>The price value must be a number greater than zero</value>
   </data>

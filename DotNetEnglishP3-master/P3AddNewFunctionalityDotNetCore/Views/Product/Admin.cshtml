@@ -1,4 +1,4 @@
-﻿@using P3AddNewFunctionalityDotNetCore.Models.ViewModels
+@using P3AddNewFunctionalityDotNetCore.Models.ViewModels
 @model IEnumerable<P3AddNewFunctionalityDotNetCore.Models.ViewModels.ProductViewModel>
 @{
     ViewData["Title"] = Localizer["ProductAdministrationModule"];
@@ -34,7 +34,7 @@
             <tr>
                 <td>@p.Name</td>
                 <td>@p.Description</td>
-                <td style="text-align:center">@p.Price</td>
+                    <td style="text-align:center">@p.PriceViewMoney()</td>
                 <td style="text-align:center">@p.Stock</td>
                 <td>@p.Details</td>
                 <td>
