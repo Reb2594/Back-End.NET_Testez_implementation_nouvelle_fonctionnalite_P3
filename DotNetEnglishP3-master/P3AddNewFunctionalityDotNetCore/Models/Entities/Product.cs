@@ -18,19 +18,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Entities
         public double Price { get; set; }
 
         public string PriceMonnaie(int quantity = 1) { return CultureInfo.CurrentCulture.Name == "fr" ? (Price * quantity).ToString("C").Replace("¤", "€") : (Price * quantity).ToString("C").Replace("¤", "$"); }
-        /*{
-            string priceMoney =  Price.ToString("C");
-            if(CultureInfo.CurrentCulture.Name == "fr")
-            {
-                priceMoney = priceMoney.Replace("¤", "€");
-            }
-            else
-            {
-                priceMoney = priceMoney.Replace("¤", "$");
-            }
-
-            return priceMoney;
-        }*/
+   
         public int Quantity { get; set; }
 
         public virtual ICollection<OrderLine> OrderLine { get; set; }
