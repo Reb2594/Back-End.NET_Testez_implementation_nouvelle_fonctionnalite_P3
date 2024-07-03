@@ -61,7 +61,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
 
         [Fact]
-        public void SaveNewProductToBDD()
+        public void SaveNewProductToDB()
         {
             //Arrange
             ProductViewModel _productTest1 = new ProductViewModel
@@ -85,7 +85,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         }
 
         [Fact]
-        public void DeleteProductFromBDD()
+        public void DeleteProductFromDB()
         {
             //Arrange
             ProductViewModel _productTest2 = new ProductViewModel
@@ -109,7 +109,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         }
 
         [Fact]
-        public void UpdatedQuantitiesInBDD()
+        public void UpdatedQuantitiesInDB()
         {
             //Arrange
             ProductViewModel _productTest3 = new ProductViewModel
@@ -137,7 +137,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         }
 
         [Fact]
-        public void GetProductByIdBDD()
+        public void GetProductByIdDB()
         {
             //Arrange
             ProductViewModel _productTest4 = new ProductViewModel
